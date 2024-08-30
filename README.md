@@ -210,6 +210,4 @@ python inference.py --config default_inference_args.yaml --protein_peptide_csv d
 
 Then the inference process of generated peptide will be save by name of `rankN_reverseprocess.pdb`
 
-<video src="./figures/visualization.mp4"></video>
-
-Finally, hope you enjoy the processing of using RAPiDock.
+hope you enjoy the processing of using RAPiDock.
