@@ -2,7 +2,7 @@
 
 ------
 
-![workflow](/home/huifeng/Works/peptide_docking/RAPiDock/articles/code/workflow.jpg)
+![workflow](./figures/workflow.jpg)
 
 ## Table of Contents:
 
@@ -164,7 +164,7 @@ We support multiple input formats depending on specific tasks.
 
 In current version of RAPiDock, we support 92 types of residues for protein-peptide binding pattern prediction. The supported residues are illustrated bellow:
 
-![Fig_S22](/home/huifeng/Works/peptide_docking/RAPiDock/articles/RAPiDock_v2/figures/Fig_S22.jpg)
+![supported_residues](./figures/supported_residues.jpg)
 
 For the use of 92 types of residues, we define a special format for model input:
 
@@ -210,6 +210,6 @@ python inference.py --config default_inference_args.yaml --protein_peptide_csv d
 
 Then the inference process of generated peptide will be save by name of `rankN_reverseprocess.pdb`
 
-<video src="/home/huifeng/Works/peptide_docking/own/inference_out_dir_not_specified/test/1.mp4"></video>
+<video src="./figures/visualization.mp4"></video>
 
 Finally, hope you enjoy the processing of using RAPiDock.
