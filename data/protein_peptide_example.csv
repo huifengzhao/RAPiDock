@@ -1,0 +1,3 @@
+complex_name,protein_description,peptide_description,
+7BBG,data/7bbg/7bbg_protein_pocket.pdb,data/7bbg/7bbg_peptide.pdb,
+7BBG_sequence,data/7bbg/7bbg_protein_pocket.pdb,RMFPNAPYL,

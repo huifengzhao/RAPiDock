@@ -1,0 +1,11 @@
+N: 10
+model_dir: train_models/CGTensorProductEquivariantModel
+ckpt: rapidock_local.pt
+scoring_function: ref2015
+confidence_ckpt: null
+confidence_model_dir: null
+batch_size: 4
+no_final_step_noise: true
+inference_steps: 16
+actual_steps: 16
+conformation_partial: '1:1:1'
