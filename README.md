@@ -188,6 +188,8 @@ python inference.py [--ohter options] --protein_description protein.pdb --peptid
 
 ### Docking prediction
 
+We provide the trained model's parameters [here](https://zenodo.org/records/13469112). The trained model's parameters should be correctly put in `train_models/CGTensorProductEquivariantModel` in order for the model to run normally.
+
 Then, we are ready to run inference:
 
 ```shell
