@@ -113,6 +113,14 @@ def prepare_data_list(original_complex_graph, N):
 def save_predictions(write_dir, predict_pos, original_complex_graph, args, confidence):
     raw_pdb = MDAnalysis.Universe(StringIO(original_complex_graph["pep"].noh_mda), format="pdb")
     peptide_unrelaxed_files = []
+    
+    re_order = None
+    # reorder predictions based on confidence output
+    if confidence is not None:
+        confidence = confidence.cpu().numpy()
+        re_order = np.argsort(confidence)[::-1]
+        confidence = confidence[re_order]
+        predict_pos = predict_pos[re_order]
 
     for rank, pos in enumerate(predict_pos):
         raw_pdb.atoms.positions = pos
@@ -136,13 +144,17 @@ def save_predictions(write_dir, predict_pos, original_complex_graph, args, confi
                     [args.scoring_function == "ref2015"] * len(peptide_unrelaxed_files),
                 ),
             )
-
         if ref2015_scores and ref2015_scores[0] is not None:
             re_order = np.argsort(ref2015_scores)
             for rank, pose in enumerate([relaxed_poses[i] for i in re_order]):
                 os.rename(pose, os.path.join(write_dir, f"rank{rank+1}_{args.scoring_function}.pdb"))
-
-def process_complex(model, confidence_model, score_model_args, confidence_args, args, original_complex_graph, write_dir):
+    
+    if re_order is not None:
+        return re_order
+    else:
+        return 0
+    
+def process_complex(model, confidence_model, score_model_args, args, original_complex_graph, write_dir):
     # data_list_prepare
     N = args.N
     data_list = prepare_data_list(original_complex_graph, N)
@@ -168,7 +180,6 @@ def process_complex(model, confidence_model, score_model_args, confidence_args, 
         ),
         visualization_list=visualization_list,
         confidence_model=confidence_model,
-        confidence_model_args=confidence_args,
     )
 
     predict_pos = np.asarray(
@@ -179,20 +190,8 @@ def process_complex(model, confidence_model, score_model_args, confidence_args, 
         ]
     )
 
-    # reorder predictions based on confidence output
-    if confidence is not None and isinstance(
-        confidence_args.rmsd_classification_cutoff, list
-    ):
-        confidence = confidence[:, 0]
-    if confidence is not None:
-        confidence = confidence.cpu().numpy()
-        re_order = np.argsort(confidence)[::-1]
-        confidence = confidence[re_order]
-        predict_pos = predict_pos[re_order]
-
     # save predictions
-    save_predictions(write_dir, predict_pos, original_complex_graph, args, confidence)
-
+    re_order = save_predictions(write_dir, predict_pos, original_complex_graph, args, confidence)
 
     # save visualisation frames
     if args.save_visualisation:
@@ -273,7 +272,7 @@ def main(args):
             continue
         try:
             process_complex(
-                model, confidence_model, score_model_args, confidence_args, args, original_complex_graph[0],
+                model, confidence_model, score_model_args, args, original_complex_graph[0],
                 f"{args.output_dir}/{inference_dataset.complex_names[idx]}"
             )
         except Exception as e:

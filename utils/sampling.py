@@ -12,8 +12,7 @@ from utils.diffusion_utils import get_t_schedule, set_time, NoiseSchedule
 from utils.peptide_updater import peptide_updater
 
 def sampling(data_list, model, args, inference_steps =20,
-             no_random=False, ode=False, visualization_list=None, confidence_model=None, confidence_data_list=None,
-             confidence_model_args=None, batch_size=32, no_final_step_noise=False, actual_steps=None):
+             no_random=False, ode=False, visualization_list=None, confidence_model=None, batch_size=32, no_final_step_noise=False, actual_steps=None):
     if actual_steps is None: actual_steps = inference_steps
     N = len(data_list)
     noise_schedule = NoiseSchedule(args)
