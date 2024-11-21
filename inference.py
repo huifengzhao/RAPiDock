@@ -150,7 +150,6 @@ def save_predictions(write_dir, predict_pos, original_complex_graph, args, confi
             for rank, order in enumerate(re_order):
                 os.rename(relaxed_poses[order], os.path.join(write_dir, f"rank{rank+1}_{args.scoring_function}.pdb"))
                 score_results.append([f"rank{rank+1}_{args.scoring_function}", f"{ref2015_scores[order]:.2f}"])
-            print(sorted(ref2015_scores))
             open(os.path.join(write_dir, "ref2015_score.csv"),'w').write('\n'.join([','.join(i) for i in score_results]))
     
     if re_order is not None:
