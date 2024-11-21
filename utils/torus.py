@@ -37,9 +37,11 @@ if os.path.exists(".p.npy"):
     p_ = np.load(".p.npy")
     score_ = np.load(".score.npy")
 else:
+    print('Computing .p.npy...', flush=True)
     p_ = p(x, sigma[:, None], N=100)
     np.save(".p.npy", p_)
 
+    print('Computing .score.npy...', flush=True) 
     score_ = grad(x, sigma[:, None], N=100) / p_
     np.save(".score.npy", score_)
 

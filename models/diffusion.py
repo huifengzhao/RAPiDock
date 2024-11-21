@@ -5,6 +5,7 @@
 # Created Time: Fri 20 Oct 2023 01:09:20 PM CST
 #########################################################################
 
+import copy
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -369,7 +370,8 @@ class CGTensorProductEquivariantModel(nn.Module):
                     nn.Linear(ns, 1, bias=False)
                 )
             
-    def forward(self, data):
+    def forward(self, _data):
+        data = copy.copy(_data)
         # get noise schedule
         tr_t = data.complex_t["tr"]
         rot_t = data.complex_t["rot"]

@@ -26,6 +26,5 @@ pytz==2024.1
 rdkit-pypi==2022.9.5
 six==1.16.0
 sympy==1.13.2
-torch==1.11.0
 tzdata==2024.1
 zipp==3.20.1

@@ -14,10 +14,11 @@
   - [Clone the current repo](#Clone-the-current-repo)
   - [Install option 1: Install via conda .yaml file](#Install-option-1-Install-via-conda-yaml-file)
   - [Install option 2: Install manually](#Install-option-2-Install-manually)
+  - [Install option 3: Install manually for higher versions of CUDA](#Install-option-3-Install-manually-for-higher-versions-of-CUDA)
 - [Protein-peptide Docking](#Protein-peptide-docking)
   - [Input formats](#Input-formats)
   - [Supported residues](#supported-residues)
-  - [Docking prediction](#docking-prediction)
+  - **[Docking prediction](#docking-prediction)**
   - [Visualization](#Visualization)
 
 ## Description
@@ -56,7 +57,7 @@ git clone https://github.com/huifengzhao/RAPiDock.git
 
 ### Install option 1: Install via conda .yaml file
 
-We can easy install the environment by using the provided ***rapidock_env.yaml*** and ***requirement.txt*** files.
+We can easy install the environment by using the provided ***rapidock_env.yaml*** and ***requirement.txt*** files. <u>These configuration files are compatible with **CUDA 12.4**.</u>
 
 ```shell
 conda env create -f rapidock_env.yaml -n RAPiDock
@@ -70,10 +71,22 @@ python -c 'import pyrosetta_installer; pyrosetta_installer.install_pyrosetta()' 
 If we fail to install the environment via provided `.yaml` file, we can also install the environment manually through the following steps:
 
 ```shell
-conda create -n RAPiDock cudatoolkit=11.5.1 pytorch=1.11.0 pyg=2.1.0 mkl=2023.1.0 python=3.9 numpy pyyaml -c conda-forge -c pytorch -c pyg
-pip install MDAnalysis==2.6.1 pandas==2.1.0 e3nn==0.5.1 rdkit-pypi==2022.9.5 fair-esm==2.0.0 pyrosetta-installer==0.1.0
+conda create -n RAPiDock python=3.9 pytorch=1.11.0 cudatoolkit=11.5.1 pyg=2.1.0 pytorch-cluster pytorch-scatter pytorch-sparse MDAnalysis=2.6.1 mkl=2023.1.0 pyyaml -c pytorch -c nvidia -c pyg -c conda-forge 
+pip install e3nn==0.5.1 rdkit-pypi==2022.9.5 fair-esm==2.0.0 pyrosetta-installer==0.1.0
 python -c 'import pyrosetta_installer; pyrosetta_installer.install_pyrosetta()' # Installation of PyRosetta (Optional)
 ```
+
+### Install option 3: Install manually for higher versions of CUDA
+
+If we are using higher versions of CUDA, such as CUDA 12.6 on H800, the PyTorch and other packages used in the aforementioned method will no longer be compatible. Therefore, we should install the environment manually through the following steps:
+
+```shell
+conda create -n RAPiDock python=3.9 pytorch torchvision torchaudio pytorch-cuda=12.4 MDAnalysis pyg pytorch-cluster pytorch-scatter pytorch-sparse pyyaml -c pytorch -c nvidia -c pyg -c conda-forge
+pip install e3nn rdkit-pypi fair-esm pyrosetta-installer
+python -c 'import pyrosetta_installer; pyrosetta_installer.install_pyrosetta()' # Installation of PyRosetta (Optional)
+```
+
+## 
 
 ## Protein-peptide Docking
 
@@ -188,7 +201,7 @@ python inference.py [--ohter options] --protein_description protein.pdb --peptid
 
 ### Docking prediction
 
-We provide the trained model's parameters [here](https://zenodo.org/records/13469112). The trained model's parameters should be correctly put in `train_models/CGTensorProductEquivariantModel` in order for the model to run normally.
+We provide the trained model's parameters [here](https://zenodo.org/records/14193621). The trained model's parameters should be correctly put into `train_models/CGTensorProductEquivariantModel` in order for the model to run normally.
 
 Then, we are ready to run inference:
 

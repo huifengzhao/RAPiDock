@@ -65,14 +65,18 @@ if os.path.exists(".so3_omegas_array2.npy"):
     _score_norms = np.load(".so3_score_norms2.npy")
     _exp_score_norms = np.load(".so3_exp_score_norms2.npy")
 else:
+    print('RAPiDock will computing the neccessary so3 params for the first running. It will take a few minutes.', flush=True)
     _eps_array = 10 ** np.linspace(np.log10(MIN_EPS), np.log10(MAX_EPS), N_EPS)
+    print('Computing .so3_omegas_array2.npy...', flush=True)
     _omegas_array = np.linspace(0, np.pi, X_N + 1)[1:]
 
     _exp_vals = np.asarray([_expansion(_omegas_array, eps) for eps in _eps_array])
     _pdf_vals = np.asarray(
         [_density(_exp, _omegas_array, marginal=True) for _exp in _exp_vals]
     )
+    print('Computing .so3_cdf_vals2.npy...', flush=True)
     _cdf_vals = np.asarray([_pdf.cumsum() / X_N * np.pi for _pdf in _pdf_vals])
+    print('Computing .so3_score_norms2.npy...', flush=True)
     _score_norms = np.asarray(
         [
             _score(_exp_vals[i], _omegas_array, _eps_array[i])
@@ -80,6 +84,7 @@ else:
         ]
     )
 
+    print('Computing .so3_score_norms2.npy...', flush=True)
     _exp_score_norms = np.sqrt(
         np.sum(_score_norms**2 * _pdf_vals, axis=1)
         / np.sum(_pdf_vals, axis=1)

@@ -17,7 +17,7 @@ ema_rate: 0.999
 embedding_scale: 10000
 embedding_type: sinusoidal
 esm_embeddings_path_test: null
-esm_embeddings_path_train: data/splits_time/lm_embeddings_chains_train_short.pt
+esm_embeddings_path_train: true
 esm_embeddings_path_val: null
 esm_embeddings_peptide_test: null
 esm_embeddings_peptide_train: null
@@ -41,8 +41,6 @@ nv: 10
 pep_amino_dim: 104
 pin_memory: true
 rec_amino_dim: 22
-restart_dir: null
-restart_lr: 0.001
 rot_sigma_max: 1.65
 rot_sigma_min: 0.03
 rot_weight: 0.25

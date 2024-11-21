@@ -15,6 +15,7 @@ def sampling(data_list, model, args, inference_steps =20,
              no_random=False, ode=False, visualization_list=None, confidence_model=None, batch_size=32, no_final_step_noise=False, actual_steps=None):
     if actual_steps is None: actual_steps = inference_steps
     N = len(data_list)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     noise_schedule = NoiseSchedule(args)
     t_schedule = get_t_schedule(inference_steps=inference_steps)
     tr_schedule, rot_schedule, tor_backbone_schedule, tor_sidechain_schedule = t_schedule, t_schedule, t_schedule, t_schedule
@@ -30,13 +31,12 @@ def sampling(data_list, model, args, inference_steps =20,
 
         for complex_graph_batch in loader:
             b = complex_graph_batch.num_graphs
-                # complex_graph_batch = complex_graph_batch.cuda(args.gpu)
-            device = None
+            
             tr_sigma, rot_sigma, tor_backbone_sigma, tor_sidechain_sigma = noise_schedule(t_tr, t_rot, t_tor_backbone, t_tor_sidechain)
             set_time(complex_graph_batch, t_tr, t_rot, t_tor_backbone, t_tor_sidechain, b, device)
             
             with torch.no_grad():
-                complex_graph_batch = complex_graph_batch.cuda(args.gpu)
+                complex_graph_batch = complex_graph_batch.to(device)
                 outputs = model(complex_graph_batch)
                 tr_score, rot_score, tor_backbone_score, tor_sidechain_score = outputs.values()
             # translation gradient (?)
@@ -102,7 +102,7 @@ def sampling(data_list, model, args, inference_steps =20,
             for complex_graph_batch in loader:
                 b = complex_graph_batch.num_graphs
                 set_time(complex_graph_batch, 0, 0, 0, 0, b, device)
-                complex_graph_batch = complex_graph_batch.cuda(args.gpu)
+                complex_graph_batch = complex_graph_batch.to(device)
                 confidence.append(confidence_model(complex_graph_batch))
             confidence = torch.cat(confidence, dim=0)
         else:

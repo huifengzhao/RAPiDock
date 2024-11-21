@@ -34,8 +34,8 @@ def get_model(args, confidence_mode=False, no_parallel=False):
         model_class = ScoreModel
     model = model_class(args)
 
-    model = model.cuda(args.gpu)
     if torch.cuda.is_available() and not no_parallel:
+        model = model.cuda(args.gpu)
         device_ids = [args.gpu + i for i in range(args.num_gpu)]
         model = DataParallel(model, device_ids=device_ids)
     return model

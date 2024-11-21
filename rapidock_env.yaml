@@ -69,4 +69,3 @@ dependencies:
   - xz=5.4.6=h5eee18b_1
   - yaml=0.2.5=h7b6447c_0
   - zlib=1.2.13=h5eee18b_1
-prefix: /home/huifeng/Tools/miniconda3/envs/RAPiDock
