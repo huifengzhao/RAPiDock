@@ -18,13 +18,15 @@
   - [Install option 3: Install manually for higher versions of CUDA](#Install-option-3-Install-manually-for-higher-versions-of-CUDA)
   - [Install option 4: Install via Dockerfile](#Install-option-4-Install-via-Dockerfile)
 - [Protein-peptide Docking](#Protein-peptide-docking)
-  - **[Docking prediction](#docking-prediction)**
+  - [Docking prediction](#docking-prediction)
+  - [Reproduce Results](#Reproduce-Results)
   - [Input formats for RAPiDock in different docking scenarios](#Input-formats-for-RAPiDock-in-different-docking-scenarios)
     - [Local docking](#Local-docking)
     - [Global docking](#Global-docking)
     - [Virtual screening](#Virtual-screening)
     - [Customized multi-tasks](#Customized-multi-tasks)
   - [Supported residues](#supported-residues)
+  - [Supported parameters of RAPiDock](#Supported-parameters-of-RAPiDock)
   - [Visualization](#Visualization)
 
 ## Description
@@ -125,6 +127,8 @@ By default, we will use 5 CPUs for computing, if we want to change the number of
 python inference.py --config default_inference_args.yaml --protein_peptide_csv data/protein_peptide_example.csv --output_dir results/default --cpu 10
 ```
 
+----------------------
+
 ### Reproduce Results
 
 We offer several processed datasets, including two primary test sets for model performance evaluation—[RefPepDB-RecentSet](https://zenodo.org/records/14193621/files/RefPepDB-RecentSet.tar.gz?download=1) and  [PepSet](https://zenodo.org/records/14193621/files/pepset.tar.gz?download=1)—and datasets for extensive [case analyses](https://zenodo.org/records/14193621/files/cases.tar.gz?download=1), covering four key application scenarios: PLK-PBD, SHP2, Import-a, and pHLA.
@@ -185,6 +189,8 @@ Take dataset RefPepDB-RecentSet for example:
 3. **Visualize Results**
    - Docking results will be saved in the directory specified by `--output_dir`.
    - Predicted protein-peptide binding affinities are stored in `ref2015_score.csv` within the `output_dir`.
+
+--------------------------
 
 ### Input formats for RAPiDock in different docking scenarios
 
@@ -273,6 +279,8 @@ We support multiple input formats depending on specific tasks.
   python inference.py [--ohter options] --protein_peptide_csv /path/to/customized_tasks.csv
   ```
 
+--------------------------
+
 ### Supported residues
 
 In current version of RAPiDock, we support 92 types of residues for protein-peptide binding pattern prediction. The supported residues are illustrated bellow:
@@ -298,6 +306,8 @@ Then, we can simply launch the model for predicting peptide with non-canonical a
 ```shell
 python inference.py [--ohter options] --protein_description protein.pdb --peptide_description HK[HYP]RL[PTR]QDS
 ```
+
+--------------------
 
 ### Supported parameters of RAPiDock
 
@@ -360,6 +370,8 @@ optional arguments:
                         None
   --cpu CPU             The cpu used in inference process
 ```
+
+--------------------
 
 ### Visualization
 
