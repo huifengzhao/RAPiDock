@@ -104,8 +104,10 @@ If we are not accustomed to using Conda for environment configuration, we also p
 
 ```bash
 docker build --no-cache -t rapidock-image . # build the image
-docker run --rm -it rapidock-image # step into the image we build for RAPiDock running 
+docker run -it --runtime=nvidia rapidock-image /bin/bash # step into the image we build for RAPiDock running 
 ```
+
+Then, we have built the environment required for the model and can proceed with the subsequent code.
 
 ## Protein-peptide Docking
 
