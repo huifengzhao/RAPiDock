@@ -15,6 +15,8 @@ ENV PATH=/opt/miniconda/bin:$PATH
 
 RUN conda init bash
 
+RUN conda tos accept
+
 RUN conda env create -f rapidock_env.yaml -n RAPiDock && echo "conda activate RAPiDock" >> ~/.bashrc
 
 ENV PATH=/opt/miniconda/envs/RAPiDock/bin:$PATH
