@@ -7,9 +7,9 @@ COPY . /RAPiDock
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget bzip2 pkg-config build-essential python3-dev python3-pip libatlas-base-dev gfortran libfreetype6-dev
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-	bash Miniconda3-latest-Linux-x86_64.sh -b -f -p /opt/miniconda && \
-    rm Miniconda3-latest-Linux-x86_64.sh
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_24.11.1-0-Linux-x86_64.sh && \
+	bash Miniconda3-py39_24.11.1-0-Linux-x86_64.sh -b -f -p /opt/miniconda && \
+    rm Miniconda3-py39_24.11.1-0-Linux-x86_64.sh
 
 ENV PATH=/opt/miniconda/bin:$PATH
 
