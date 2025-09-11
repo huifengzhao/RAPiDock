@@ -372,6 +372,7 @@ optional arguments:
                         None
   --cpu CPU             The cpu used in inference process
 ```
+Note: A confidence model module was implemented during early development, but we ultimately used Rosetta’s scoring function for more stable results, so the confidence model is not included in the final workflow.
 
 --------------------
 
