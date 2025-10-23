@@ -279,7 +279,7 @@ def main(args):
                 f"{args.output_dir}/{inference_dataset.complex_names[idx]}"
             )
         except Exception as e:
-            print("Failed on", original_complex_graph["name"], e)
+            print("Failed on", original_complex_graph[0]["name"], e)
             failures += 1
 
     print(f"Failed for {failures} complexes")
