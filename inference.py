@@ -32,7 +32,7 @@ warnings.filterwarnings("ignore")
 def load_model(score_model_args, ckpt_path, device):
     model = get_model(score_model_args, no_parallel=True)
     state_dict = torch.load(
-        ckpt_path, map_location=torch.device("cpu")
+        ckpt_path, map_location=torch.device("cpu"), weights_only=True
     )
     model.load_state_dict(state_dict["model"], strict=True)
     model = model.to(device)
@@ -258,6 +258,7 @@ def main(args):
         state_dict = torch.load(
             f"{args.confidence_model_dir}/{args.confidence_ckpt}",
             map_location=torch.device("cpu"),
+            weights_only=True,
         )
         confidence_model.load_state_dict(state_dict["model"], strict=True)
         confidence_model = confidence_model.to(device)
